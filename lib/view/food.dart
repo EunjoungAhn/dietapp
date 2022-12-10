@@ -58,6 +58,11 @@ class _FoodAddPageState extends State<FoodAddPage> {
               );
             }
             else if(index == 1){
+              String _t = food.time.toString();
+              String _m = _t.substring(_t.length -2);
+              String _h = _t.substring(0, _t.length -2);
+              print("${_h}:${_m}");
+
               return Container(
                 margin: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 child: Column(
@@ -66,7 +71,23 @@ class _FoodAddPageState extends State<FoodAddPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("식사시간"),
-                        Text("오후 11:32"),
+                        InkWell(
+                            child: Text("오후 11:32"),
+                          onTap: () async {
+                              TimeOfDay _time = await showTimePicker(
+                                  context: context,
+                                  initialTime: TimeOfDay.now()
+                              );
+
+                              if(_time == null){
+                                return;
+                              }
+
+                              setState(() { // 위에서 가져온 시간을 데이터 베이스에 저장할 수 있도록 설정
+                               food.time = int.parse("${_time.hour}${Utils.makeTwoDigit(_time.minute)}");
+                              });
+                          },
+                        ),
                       ],
                     ),
                     Container(height: 12,),
