@@ -21,14 +21,28 @@ class _FoodAddPageState extends State<FoodAddPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: bgColor,
+        iconTheme: IconThemeData(color: txtColor),
+        elevation: 1.0,
+        actions: [
+          TextButton(onPressed: () {
+            // 저장하고 종료
+
+          }, child: Text("저장"),
+          )
+        ],
+      ),
       body: Container(
         child: ListView.builder(
           itemBuilder: (context, index) {
             if(index == 0){
               return Container(
+                margin: EdgeInsets.symmetric(vertical: 16),
+                height: cardSize,
+                width: cardSize,
                 child: InkWell(
-                  child: Image.asset(""),
+                  child: Image.asset("assets/img/rice.png"),
                   onTap: () {
 
                   },
@@ -37,7 +51,7 @@ class _FoodAddPageState extends State<FoodAddPage> {
             }
             else if(index == 1){
               return Container(
-                margin: EdgeInsets.symmetric(horizontal: 16),
+                margin: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 child: Column(
                   children: [
                     Row(
@@ -88,7 +102,7 @@ class _FoodAddPageState extends State<FoodAddPage> {
             }
             else if(index == 2){
               return Container(
-                margin: EdgeInsets.symmetric(horizontal: 16),
+                margin: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 child: Column(
                   children: [
                     Row(
@@ -137,7 +151,7 @@ class _FoodAddPageState extends State<FoodAddPage> {
             }
             else if(index == 3){
               return Container(
-                margin: EdgeInsets.symmetric(horizontal: 16),
+                margin: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
