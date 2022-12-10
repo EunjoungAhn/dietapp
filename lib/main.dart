@@ -29,13 +29,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  int currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -45,10 +40,40 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Container(),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: () {
+
+        },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        items: [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: "오늘"
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.calendar_today),
+              label: "기록"
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.show_chart),
+              label: "몸무게"
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.bar_chart),
+              label: "통계"
+          ),
+        ],
+        currentIndex: currentIndex,
+        onTap: (index) {
+          // 네비게이션이 선택 될때마다 변경
+          setState(() {
+              currentIndex = index;
+          });
+        },
+      ),
     );
   }
 }
