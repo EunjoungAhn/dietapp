@@ -1,3 +1,5 @@
+import 'package:dietapp/data/data.dart';
+import 'package:dietapp/style.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -35,13 +37,48 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Container(),
+      appBar: AppBar(),
+      body: getPage(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          // 선택 화면창 만들기
+          showModalBottomSheet(
+              context: context,
+              backgroundColor: bgColor,
+              builder: (context) {
+                return SizedBox(
+                  height: 250,
+                    child: Column(
+                      children: [
+                        TextButton(
+                            child: Text("식단"),
+                            onPressed: () {
+                              
+                            },
+                        ),
+                        TextButton(
+                          child: Text("운동"),
+                          onPressed: () {
 
+                          },
+                        ),
+                        TextButton(
+                          child: Text("몸무게"),
+                          onPressed: () {
+
+                          },
+                        ),
+                        TextButton(
+                          child: Text("눈바디"),
+                          onPressed: () {
+
+                          },
+                        ),
+                      ],
+                    ),
+                );
+              },
+          );
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
@@ -73,6 +110,70 @@ class _MyHomePageState extends State<MyHomePage> {
               currentIndex = index;
           });
         },
+      ),
+    );
+  }
+
+  Widget getPage(){
+    if(currentIndex == 0){
+      return getHomeWidget(DateTime.now());
+    }
+
+    return Container();
+  }
+
+  Container getHomeWidget(DateTime date){
+    return Container(
+      child: Column(
+        children: [
+          Container(
+            child: ListView.builder(
+              itemBuilder: (context, index) {
+                return Container(
+                  height: cardSize,
+                  width: cardSize,
+                  color: mainColor,
+                );
+              },
+              itemCount: 3,
+              scrollDirection: Axis.horizontal,
+            ),
+            height: cardSize + 20,
+          ),
+          Container(
+            child: ListView.builder(
+              itemBuilder: (context, index) {
+                return Container(
+                  height: cardSize,
+                  width: cardSize,
+                  color: mainColor,
+                );
+              },
+              itemCount: 3,
+              scrollDirection: Axis.horizontal,
+            ),
+            height: cardSize + 20,
+          ),
+          Container(
+            child: ListView.builder(
+              itemBuilder: (context, index) {
+                if(index == 0) {
+                  // 몸무게
+                }else{
+                  // 눈바디
+                }
+                return Container(
+                  height: cardSize,
+                  width: cardSize,
+                  color: mainColor,
+                );
+              },
+              itemCount: 3,
+              scrollDirection: Axis.horizontal,
+            ),
+            height: cardSize + 20,
+          ),
+        ],
       ),
     );
   }
