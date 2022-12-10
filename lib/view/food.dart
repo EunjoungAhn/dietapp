@@ -16,6 +16,7 @@ class FoodAddPage extends StatefulWidget {
 class _FoodAddPageState extends State<FoodAddPage> {
  // Food에 접근할 수 있게 설정
   Food get food => widget.food;
+  TextEditingController memoController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +35,7 @@ class _FoodAddPageState extends State<FoodAddPage> {
                 ),
               );
             }
-            else if( index == 1){
+            else if(index == 1){
               return Container(
                 margin: EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
@@ -85,7 +86,7 @@ class _FoodAddPageState extends State<FoodAddPage> {
                 ),
               );
             }
-            else if( index == 2){
+            else if(index == 2){
               return Container(
                 margin: EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
@@ -134,7 +135,30 @@ class _FoodAddPageState extends State<FoodAddPage> {
                 ),
               );
             }
-
+            else if(index == 3){
+              return Container(
+                margin: EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("식단메모"),
+                    Container(height: 12),
+                    TextField(
+                      maxLines: 10,
+                      minLines: 10,
+                      keyboardType: TextInputType.multiline,
+                      controller: memoController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(color: txtColor, width: 0.5),
+                          borderRadius: BorderRadius.circular(12),
+                        )
+                      ),
+                    )
+                  ],
+                ),
+              );
+            }
             return Container();
           },
           itemCount: 4,
