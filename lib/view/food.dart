@@ -1,4 +1,5 @@
 import 'package:dietapp/data/data.dart';
+import 'package:dietapp/data/database.dart';
 import 'package:dietapp/style.dart';
 import 'package:dietapp/utils.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,14 @@ class _FoodAddPageState extends State<FoodAddPage> {
   TextEditingController memoController = TextEditingController();
 
   @override
+  void initState() {
+    // 실제 memo 데이블의 데이터를 TextEditingController에 표시하기 위해
+    // 첫 실행시 같이 실행 되어야 한다.
+    memoController.text = food.memo;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -27,10 +36,15 @@ class _FoodAddPageState extends State<FoodAddPage> {
         iconTheme: IconThemeData(color: txtColor),
         elevation: 1.0,
         actions: [
-          TextButton(onPressed: () {
+          TextButton(
+            onPressed: () async {
             // 저장하고 종료
-
-          }, child: Text("저장"),
+            final db = DatabaseHelper.instance;
+            food.memo = memoController.text; // memo에 작성한 데이터를 다시 담아주어야 한다.
+            await db.insertFood(food);
+            Navigator.of(context).pop();
+          },
+            child: Text("저장"),
           )
         ],
       ),
