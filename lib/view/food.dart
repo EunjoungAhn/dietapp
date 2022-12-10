@@ -45,7 +45,10 @@ class _FoodAddPageState extends State<FoodAddPage> {
                 child: InkWell(
                   child: AspectRatio( // 1:1 비율의 이미지로 보이도록 설정
                     child:
-                     Image.asset("assets/img/rice.png"),
+                     food.image.isEmpty ? Image.asset("assets/img/rice.png") :
+                    AssetThumb(asset: Asset(food.image,"rice.png", 0,0),
+                        width: cardSize.toInt(), height: cardSize.toInt(),
+                    ),
                     aspectRatio: 1/1,
                   ),
                   onTap: () {
