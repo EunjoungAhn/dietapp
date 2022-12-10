@@ -3,12 +3,13 @@ class Food{
   int id;
   int date;
   int type;
+  int meal;
   int kcal;
   int time;
   String memo;
   String image;
 
-  Food({this.id, this.date, this.type, this.kcal, this.time, this.memo,
+  Food({this.id, this.date, this.meal, this.type, this.kcal, this.time, this.memo,
       this.image});
 
   //food를 데이터 베이스에서 불러올때 사용
@@ -17,6 +18,7 @@ class Food{
         id: data["id"],
         date: data["date"],
         type: data["type"],
+        meal: data["meal"],
         kcal: data["kcal"],
         time: data["time"],
         memo: data["memo"],
@@ -30,6 +32,7 @@ class Food{
       "id": this.id,
       "date": this.date,
       "type": this.type,
+      "meal": this.meal,
       "kcal": this.kcal,
       "time": this.time,
       "memo": this.memo,

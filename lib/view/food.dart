@@ -109,17 +109,17 @@ class _FoodAddPageState extends State<FoodAddPage> {
                             alignment: Alignment.center,
                             child: Text(mealType[_index],
                               style: TextStyle(
-                                color: food.type == _index ? Colors.white : iTxtColor,
+                                color: food.meal == _index ? Colors.white : iTxtColor,
                               ),),
                             // 클릭시 활성화 같은 표시를 위해 설정
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
-                              color: food.type == _index ? mainColor : ibgColor,
+                              color: food.meal == _index ? mainColor : ibgColor,
                             ),
                           ),
                           onTap: () {
                             setState(() {
-                              food.type = _index;
+                              food.meal = _index;
                             });
                           },
                         );

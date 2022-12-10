@@ -63,6 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     kcal: 0,
                                     memo: "",
                                     type: 0,
+                                    meal: 0,
                                     image: "",
                                     time: 1130,
                                   ),
