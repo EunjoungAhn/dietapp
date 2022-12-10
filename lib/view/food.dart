@@ -61,7 +61,8 @@ class _FoodAddPageState extends State<FoodAddPage> {
               String _t = food.time.toString();
               String _m = _t.substring(_t.length -2);
               String _h = _t.substring(0, _t.length -2);
-              print("${_h}:${_m}");
+
+              TimeOfDay time = TimeOfDay(hour: int.parse(_h), minute: int.parse(_m));
 
               return Container(
                 margin: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -72,7 +73,8 @@ class _FoodAddPageState extends State<FoodAddPage> {
                       children: [
                         Text("식사시간"),
                         InkWell(
-                            child: Text("오후 11:32"),
+                            child: Text(
+                            "${time.hour > 11 ? "오후" : "오전"}${Utils.makeTwoDigit(time.hour % 12)}:${Utils.makeTwoDigit(time.minute)}"),
                           onTap: () async {
                               TimeOfDay _time = await showTimePicker(
                                   context: context,
