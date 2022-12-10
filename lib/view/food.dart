@@ -2,6 +2,7 @@ import 'package:dietapp/data/data.dart';
 import 'package:dietapp/style.dart';
 import 'package:dietapp/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
 
 class FoodAddPage extends StatefulWidget {
 
@@ -44,7 +45,7 @@ class _FoodAddPageState extends State<FoodAddPage> {
                 child: InkWell(
                   child: Image.asset("assets/img/rice.png"),
                   onTap: () {
-
+                    selectImage();
                   },
                 ),
               );
@@ -179,6 +180,20 @@ class _FoodAddPageState extends State<FoodAddPage> {
         ),
       ),
     );
+  }
+
+  Future<void> selectImage()async{
+    final _img = await MultiImagePicker.pickImages(maxImages: 1, enableCamera: true);
+
+    // 이미지를 안불러 오면 함수 종료
+    if(_img.length < 1){
+      return;
+    }
+
+    setState(() {// 리프레시를 시켜서 실제 이미지를 볼 수 있도록
+    // 이미지를 불러왔다면
+    food.image = _img.first.identifier;
+    });
   }
 }
 
