@@ -22,6 +22,7 @@ class _WorkoutAddPageState extends State<WorkoutAddPage> {
   TextEditingController nameController = TextEditingController();
   TextEditingController timeController = TextEditingController();
   TextEditingController calController = TextEditingController();
+  TextEditingController distanceController = TextEditingController();
 
   @override
   void initState() {
@@ -31,6 +32,7 @@ class _WorkoutAddPageState extends State<WorkoutAddPage> {
     nameController.text = workout.name;
     timeController.text = workout.time.toString();
     calController.text = workout.kcal.toString();
+    distanceController.text = workout.distance.toString();
     super.initState();
   }
 
@@ -47,6 +49,25 @@ class _WorkoutAddPageState extends State<WorkoutAddPage> {
               // 저장하고 종료
               final db = DatabaseHelper.instance;
               workout.memo = memoController.text; // memo에 작성한 데이터를 다시 담아주어야 한다.
+              workout.name = nameController.text;
+              if(timeController.text.isEmpty){// time 을 입력 안 했을시 기본값 적용
+                workout.time = 0;
+              }else{
+                workout.time = int.parse(timeController.text);
+              }
+
+              if(calController.text.isEmpty){// time 을 입력 안 했을시 기본값 적용
+                workout.kcal = 0;
+              }else{
+                workout.kcal = int.parse(calController.text);
+              }
+
+              if(distanceController.text.isEmpty){// time 을 입력 안 했을시 기본값 적용
+                workout.distance = 0;
+              }else{
+                workout.distance = int.parse(distanceController.text);
+              }
+
               await db.insertWorkout(workout);
               Navigator.of(context).pop();
             },
@@ -133,6 +154,28 @@ class _WorkoutAddPageState extends State<WorkoutAddPage> {
                           child: TextField(
                             keyboardType: TextInputType.number,// 숫자만 입력가능하게 설정
                             controller: calController,
+                            textAlign: TextAlign.end,
+                            decoration: InputDecoration(
+                                border: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: txtColor,
+                                        width: 0.5
+                                    )
+                                )
+                            ),
+                          ),
+                          width: 70,
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("운동 거리"),
+                        Container(
+                          child: TextField(
+                            keyboardType: TextInputType.number,// 숫자만 입력가능하게 설정
+                            controller: distanceController,
                             textAlign: TextAlign.end,
                             decoration: InputDecoration(
                                 border: UnderlineInputBorder(
@@ -279,20 +322,6 @@ class _WorkoutAddPageState extends State<WorkoutAddPage> {
         ),
       ),
     );
-  }
-
-  Future<void> selectImage()async{
-    final _img = await MultiImagePicker.pickImages(maxImages: 1, enableCamera: true);
-
-    // 이미지를 안불러 오면 함수 종료
-    if(_img.length < 1){
-      return;
-    }
-
-    setState(() {// 리프레시를 시켜서 실제 이미지를 볼 수 있도록
-      // 이미지를 불러왔다면
-      //workout.image = _img.first.identifier;
-    });
   }
 }
 
