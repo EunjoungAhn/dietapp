@@ -2,6 +2,8 @@ import 'dart:math' as math;
 
 List<String> mealTime = ["아침", "점심", "저녁", "간식"];
 List<String> mealType = ["균형잡힌", "단백질", "탄수화물", "지방", "치팅"];
+List<String> wIntense = ["약하게", "적당히", "고강도",];
+List<String> wPart = ["팔", "다리", "가슴", "등", "복근"];
 
 class Utils{
   // 날짜를 숫자로 변경하는 함수

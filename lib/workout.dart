@@ -19,12 +19,14 @@ class _WorkoutAddPageState extends State<WorkoutAddPage> {
   // Food에 접근할 수 있게 설정
   Workout get workout => widget.workout;
   TextEditingController memoController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
 
   @override
   void initState() {
     // 실제 memo 데이블의 데이터를 TextEditingController에 표시하기 위해
     // 첫 실행시 같이 실행 되어야 한다.
     memoController.text = workout.memo;
+    nameController.text = workout.name;
     super.initState();
   }
 
@@ -55,7 +57,32 @@ class _WorkoutAddPageState extends State<WorkoutAddPage> {
               return Container(
                 child: Row(
                   children: [
-
+                    Container(
+                      child: InkWell(// 선택을 할때마다 운동 이미지를 변경할 수 있도록, 숫자에 맞게
+                        child: Image.asset("assets/img/${workout.type}"),
+                        onTap: () {
+                          setState(() {
+                            workout.type ++;
+                            workout.type = workout.type % 4; // 0 나누기 4 하면 0이기에 반복 하도록
+                          });
+                        },
+                      ),
+                      height: 70, width: 70,
+                    ),
+                    Container(width: 8,),
+                    Expanded(
+                      child: TextField(
+                        controller: nameController,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: txtColor,
+                              width: 0.5
+                            )
+                          )
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               );
@@ -69,24 +96,6 @@ class _WorkoutAddPageState extends State<WorkoutAddPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("식사시간"),
-                        InkWell(
-                          child: Text(
-                              "${time.hour > 11 ? "오후" : "오전"}${Utils.makeTwoDigit(time.hour % 12)}:${Utils.makeTwoDigit(time.minute)}"),
-                          onTap: () async {
-                            TimeOfDay _time = await showTimePicker(
-                                context: context,
-                                initialTime: TimeOfDay.now()
-                            );
-
-                            if(_time == null){
-                              return;
-                            }
-
-                            setState(() { // 위에서 가져온 시간을 데이터 베이스에 저장할 수 있도록 설정
-                              workout.time = int.parse("${_time.hour}${Utils.makeTwoDigit(_time.minute)}");
-                            });
-                          },
-                        ),
                       ],
                     ),
                     Container(height: 12,),
@@ -234,7 +243,7 @@ class _WorkoutAddPageState extends State<WorkoutAddPage> {
 
     setState(() {// 리프레시를 시켜서 실제 이미지를 볼 수 있도록
       // 이미지를 불러왔다면
-      workout.image = _img.first.identifier;
+      //workout.image = _img.first.identifier;
     });
   }
 }
