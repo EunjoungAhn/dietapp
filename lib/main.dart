@@ -1,8 +1,9 @@
 import 'package:dietapp/data/data.dart';
 import 'package:dietapp/style.dart';
 import 'package:dietapp/utils.dart';
+import 'package:dietapp/view/body.dart';
 import 'package:dietapp/view/food.dart';
-import 'package:dietapp/workout.dart';
+import 'package:dietapp/view/workout.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -85,6 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     kcal: 0,
                                     intense: 0,
                                     part: 0,
+                                    distance: 0,
                                     name: "",
                                     memo: "",
                                   ),
@@ -100,8 +102,17 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         TextButton(
                           child: Text("눈바디"),
-                          onPressed: () {
-
+                          onPressed: () async {
+                            await Navigator.of(context).push(
+                                MaterialPageRoute(builder: (context) => EyeBodyAddPage(
+                                  // 새로 만든 workout을 불러준다.
+                                  body: EyeBody(
+                                    date: Utils.getFormatTime(DateTime.now()),
+                                    image: "",
+                                    memo: "",
+                                  ),
+                                ),)
+                            );
                           },
                         ),
                       ],
