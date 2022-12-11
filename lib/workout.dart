@@ -20,6 +20,8 @@ class _WorkoutAddPageState extends State<WorkoutAddPage> {
   Workout get workout => widget.workout;
   TextEditingController memoController = TextEditingController();
   TextEditingController nameController = TextEditingController();
+  TextEditingController timeController = TextEditingController();
+  TextEditingController calController = TextEditingController();
 
   @override
   void initState() {
@@ -27,6 +29,8 @@ class _WorkoutAddPageState extends State<WorkoutAddPage> {
     // 첫 실행시 같이 실행 되어야 한다.
     memoController.text = workout.memo;
     nameController.text = workout.name;
+    timeController.text = workout.time.toString();
+    calController.text = workout.kcal.toString();
     super.initState();
   }
 
@@ -54,12 +58,14 @@ class _WorkoutAddPageState extends State<WorkoutAddPage> {
         child: ListView.builder(
           itemBuilder: (context, index) {
             if(index == 0){
+
               return Container(
+                margin: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 child: Row(
                   children: [
                     Container(
                       child: InkWell(// 선택을 할때마다 운동 이미지를 변경할 수 있도록, 숫자에 맞게
-                        child: Image.asset("assets/img/${workout.type}"),
+                        child: Image.asset("assets/img/${workout.type}.png"),
                         onTap: () {
                           setState(() {
                             workout.type ++;
@@ -68,6 +74,11 @@ class _WorkoutAddPageState extends State<WorkoutAddPage> {
                         },
                       ),
                       height: 70, width: 70,
+                      // 운동 이미지 클릭시 클릭 효과 처리
+                      decoration: BoxDecoration(
+                        color: ibgColor,
+                        borderRadius: BorderRadius.circular(70),
+                      ),
                     ),
                     Container(width: 8,),
                     Expanded(
@@ -95,10 +106,47 @@ class _WorkoutAddPageState extends State<WorkoutAddPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("식사시간"),
+                        Text("운동시간"),
+                        Container(
+                          child: TextField(
+                            keyboardType: TextInputType.number,// 숫자만 입력가능하게 설정
+                            controller: timeController,
+                            textAlign: TextAlign.end,
+                            decoration: InputDecoration(
+                                border: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: txtColor,
+                                        width: 0.5
+                                    )
+                                )
+                            ),
+                          ),
+                          width: 70,
+                        ),
                       ],
                     ),
-                    Container(height: 12,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("운동 칼로리"),
+                        Container(
+                          child: TextField(
+                            keyboardType: TextInputType.number,// 숫자만 입력가능하게 설정
+                            controller: calController,
+                            textAlign: TextAlign.end,
+                            decoration: InputDecoration(
+                                border: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: txtColor,
+                                        width: 0.5
+                                    )
+                                )
+                            ),
+                          ),
+                          width: 70,
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               );
