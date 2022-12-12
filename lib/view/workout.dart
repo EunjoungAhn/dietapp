@@ -332,6 +332,19 @@ class MainWorkoutCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.all(8),
+      padding: EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        color: bgColor,
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 4,
+            spreadRadius: 4,
+            color: Colors.black12
+          )
+        ]
+      ),
       child: ClipRRect(
         child: AspectRatio(
           child: Container(
