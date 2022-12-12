@@ -296,7 +296,7 @@ class MainFoodCard extends StatelessWidget {
                 child: Container(
                   // 텍스트에는 마진을 못 넣어서
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                  child: Text(mealTime[food.time], style: TextStyle(color: Colors.white),),
+                  child: Text(mealTime[food.meal], style: TextStyle(color: Colors.white),),
                   decoration: BoxDecoration(
                     color: mainColor,
                     borderRadius: BorderRadius.circular(8)

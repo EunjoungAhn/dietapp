@@ -1,4 +1,5 @@
 import 'package:dietapp/data/data.dart';
+import 'package:dietapp/data/database.dart';
 import 'package:dietapp/style.dart';
 import 'package:dietapp/utils.dart';
 import 'package:dietapp/view/body.dart';
@@ -35,8 +36,34 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final dbHelper = DatabaseHelper.instance;
 
   int currentIndex = 0;
+  DateTime dateTime = DateTime.now();
+
+  // 메인화면에서 각각의 데이터를 표현할 데이터 저장 변수 선언
+  List<Workout> workouts = [];
+  List<Food> foods = [];
+  List<EyeBody> bodies = [];
+  Weight weight;
+
+  void getHistories() async {
+    int _d = Utils.getFormatTime(dateTime);
+
+    foods = await dbHelper.queryFoodByDate(_d);
+    workouts = await dbHelper.queryWorkoutByDate(_d);
+    bodies = await dbHelper.queryEyeBodyByDate(_d);
+    weight = (await dbHelper.queryWeightByDate(_d)) as Weight;
+
+    setState(() { });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    getHistories();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +98,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                   ),
                                 ),)
                               );
+                              
+                              // 리프레시가 있을지 모르니 추가하여 항상 불러준다.
+                              getHistories();
                             },
                         ),
                         TextButton(
@@ -113,6 +143,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                   ),
                                 ),)
                             );
+
+                            getHistories();
                           },
                         ),
                       ],
@@ -173,13 +205,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 return Container(
                   height: cardSize,
                   width: cardSize,
-                  color: mainColor,
+                  child: MainFoodCard(food: foods[index],),
                 );
               },
-              itemCount: 3,
+              itemCount: foods.length,
               scrollDirection: Axis.horizontal,
             ),
-            height: cardSize + 20,
+            height: cardSize,
           ),
           Container(
             child: ListView.builder(
@@ -187,10 +219,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 return Container(
                   height: cardSize,
                   width: cardSize,
-                  color: mainColor,
+                  child: MainWorkoutCard(workout: workouts[index],),
                 );
               },
-              itemCount: 3,
+              itemCount: workouts.length,
               scrollDirection: Axis.horizontal,
             ),
             height: cardSize + 20,

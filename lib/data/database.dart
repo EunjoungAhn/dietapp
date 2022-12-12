@@ -111,7 +111,7 @@ class DatabaseHelper {
 
   }
 
-  Future<List<Food>> getFoodByDate(int date) async {
+  Future<List<Food>> queryFoodByDate(int date) async {
     Database db = await instance.database;
     List<Food> foods = [];
 
@@ -158,7 +158,7 @@ class DatabaseHelper {
 
   }
 
-  Future<List<Workout>> getWorkoutByDate(int date) async {
+  Future<List<Workout>> queryWorkoutByDate(int date) async {
     Database db = await instance.database;
     List<Workout> workouts = [];
 
@@ -205,7 +205,7 @@ class DatabaseHelper {
 
   }
 
-  Future<List<EyeBody>> getEyeBodyByDate(int date) async {
+  Future<List<EyeBody>> queryEyeBodyByDate(int date) async {
     Database db = await instance.database;
     List<EyeBody> eyeBodys = [];
 
@@ -239,7 +239,7 @@ class DatabaseHelper {
   Future<int> insertWeight(Weight weight) async {
     Database db = await instance.database;
 
-    List<Weight> _d = await getWeightByDate(weight.date);
+    List<Weight> _d = await queryWeightByDate(weight.date);
 
     if(_d.isEmpty) {
       //생성
@@ -254,7 +254,7 @@ class DatabaseHelper {
 
   }
 
-  Future<List<Weight>> getWeightByDate(int date) async {
+  Future<List<Weight>> queryWeightByDate(int date) async {
     Database db = await instance.database;
     List<Weight> weights = [];
 
