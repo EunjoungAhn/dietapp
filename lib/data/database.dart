@@ -55,7 +55,7 @@ class DatabaseHelper {
       distance INTEGER DEFAULT 0,
       kcal INTEGER DEFAULT 0,
       intense INTEGER DEFAULT 0,
-      part INTEGER DEFAULT,
+      part INTEGER DEFAULT 0,
       name String,
       memo String
     )
