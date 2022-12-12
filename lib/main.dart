@@ -122,6 +122,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                   ),
                                 ),)
                             );
+
+                            getHistories();
                           },
                         ),
                         TextButton(

@@ -341,7 +341,7 @@ class MainWorkoutCard extends StatelessWidget {
                   children: [
                     Container(
                       child: Image.asset("assets/img/${workout.type}.png"),
-                      height: 30, width: 30,
+                      height: 50, width: 50,
                       // 운동 이미지 클릭시 클릭 효과 처리
                       decoration: BoxDecoration(
                         color: ibgColor,
@@ -357,6 +357,7 @@ class MainWorkoutCard extends StatelessWidget {
                     ),
                   ],
                 ),
+                Container(height: 8,),
                 Expanded(
                     child: Text(workout.name),
                 ),

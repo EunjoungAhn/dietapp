@@ -254,6 +254,7 @@ class MainFoodCard extends StatelessWidget {
     TimeOfDay time = TimeOfDay(hour: int.parse(_h), minute: int.parse(_m));
 
     return Container(
+      margin: EdgeInsets.all(8),
       child: ClipRRect(
         // 전체 라운드 형태를 만들기 위해 감싼 위젯
         borderRadius: BorderRadius.circular(12),
@@ -269,23 +270,28 @@ class MainFoodCard extends StatelessWidget {
               // 이미지 위에 검은색의 필터 쒸우기 글씨가 잘 보이기 위해
               Positioned.fill(
                   child: Container(
-                    color: Colors.black12,
+                    color: Colors.black38,
                   ),
               ),
 
-              Positioned(
+              Positioned.fill(
                 left: 0,
                 right: 0,
                 top: 0,
                 bottom: 0,
-                child: Text(
-                    "${time.hour > 11 ? "오후" : "오전"}"
-                    "${Utils.makeTwoDigit(time.hour % 12)}:"
-                    "${Utils.makeTwoDigit(time.minute)}",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                child: Container(
+                  child: Text(
+                      "${time.hour > 11 ? "오후" : "오전"}"
+                      "${Utils.makeTwoDigit(time.hour % 12)}:"
+                      "${Utils.makeTwoDigit(time.minute)}",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 18
+                    ),
+                    textAlign: TextAlign.center,
                   ),
+                  alignment: Alignment.center,
                 ),
               ),
 
@@ -295,8 +301,8 @@ class MainFoodCard extends StatelessWidget {
                 bottom: 6,
                 child: Container(
                   // 텍스트에는 마진을 못 넣어서
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                  child: Text(mealTime[food.meal], style: TextStyle(color: Colors.white),),
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  child: Text(mealTime[food.meal], style: TextStyle(color: Colors.white, fontSize: 12),),
                   decoration: BoxDecoration(
                     color: mainColor,
                     borderRadius: BorderRadius.circular(8)

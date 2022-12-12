@@ -5,4 +5,4 @@ Color bgColor = Colors.white;
 Color ibgColor = Colors.grey.withOpacity(0.1);
 Color txtColor = Colors.black;
 Color iTxtColor = Colors.black38;
-double cardSize = 130;
+double cardSize = 150;
