@@ -325,3 +325,49 @@ class _WorkoutAddPageState extends State<WorkoutAddPage> {
   }
 }
 
+class MainWorkoutCard extends StatelessWidget {
+  final Workout workout;
+  const MainWorkoutCard({Key key, this.workout}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: ClipRRect(
+        child: AspectRatio(
+          child: Container(
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      child: Image.asset("assets/img/${workout.type}.png"),
+                      height: 30, width: 30,
+                      // 운동 이미지 클릭시 클릭 효과 처리
+                      decoration: BoxDecoration(
+                        color: ibgColor,
+                        borderRadius: BorderRadius.circular(70),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(// 분을 시간으로 표현하기
+                        "${Utils.makeTwoDigit(workout.time ~/ 60)}:"
+                            "${Utils.makeTwoDigit(workout.time % 60)}",
+                        textAlign: TextAlign.end,
+                      ),
+                    ),
+                  ],
+                ),
+                Expanded(
+                    child: Text(workout.name),
+                ),
+                Text(workout.kcal == 0 ? "": "${workout.kcal}kcal"),
+                Text(workout.distance == 0 ? "": "${workout.distance}km"),
+              ],
+            ),
+          ),
+          aspectRatio: 1,
+        ),
+      ),
+    );
+  }
+}
