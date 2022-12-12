@@ -241,3 +241,74 @@ class _FoodAddPageState extends State<FoodAddPage> {
   }
 }
 
+class MainFoodCard extends StatelessWidget {
+  final Food food;
+  const MainFoodCard({Key key, this.food}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    String _t = food.time.toString();
+    String _m = _t.substring(_t.length -2);
+    String _h = _t.substring(0, _t.length -2);
+
+    TimeOfDay time = TimeOfDay(hour: int.parse(_h), minute: int.parse(_m));
+
+    return Container(
+      child: ClipRRect(
+        // 전체 라운드 형태를 만들기 위해 감싼 위젯
+        borderRadius: BorderRadius.circular(12),
+        child: AspectRatio(
+          child: Stack(
+            children: [
+              // stack의 전체 화면을 채우겠다.
+              Positioned.fill(
+              child: AssetThumb(asset: Asset(food.image,"rice.png", 0,0),
+                    width: cardSize.toInt(), height: cardSize.toInt()),
+              ),
+
+              // 이미지 위에 검은색의 필터 쒸우기 글씨가 잘 보이기 위해
+              Positioned.fill(
+                  child: Container(
+                    color: Colors.black12,
+                  ),
+              ),
+
+              Positioned(
+                left: 0,
+                right: 0,
+                top: 0,
+                bottom: 0,
+                child: Text(
+                    "${time.hour > 11 ? "오후" : "오전"}"
+                    "${Utils.makeTwoDigit(time.hour % 12)}:"
+                    "${Utils.makeTwoDigit(time.minute)}",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+
+              Positioned.fill(
+                // 오른쪽 하단으로 설정
+                right: 6,
+                bottom: 6,
+                child: Container(
+                  // 텍스트에는 마진을 못 넣어서
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                  child: Text(mealTime[food.time], style: TextStyle(color: Colors.white),),
+                  decoration: BoxDecoration(
+                    color: mainColor,
+                    borderRadius: BorderRadius.circular(8)
+                  ),
+                ),
+              ),
+
+            ],
+          ),
+          aspectRatio: 1,
+        ),
+      ),
+    );
+  }
+}
