@@ -45,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Workout> workouts = [];
   List<Food> foods = [];
   List<EyeBody> bodies = [];
-  Weight weight;
+  List<Weight> weight = [];
 
   void getHistories() async {
     int _d = Utils.getFormatTime(dateTime);
@@ -53,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
     foods = await dbHelper.queryFoodByDate(_d);
     workouts = await dbHelper.queryWorkoutByDate(_d);
     bodies = await dbHelper.queryEyeBodyByDate(_d);
-    weight = (await dbHelper.queryWeightByDate(_d)) as Weight;
+    weight = await dbHelper.queryWeightByDate(_d);
 
     setState(() { });
   }
@@ -61,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-
+  // 앱이 실행될때 오늘 날짜 기준으로 메인화면에 데이터 불러오기
     getHistories();
   }
 
@@ -225,7 +225,7 @@ class _MyHomePageState extends State<MyHomePage> {
               itemCount: workouts.length,
               scrollDirection: Axis.horizontal,
             ),
-            height: cardSize + 20,
+            height: cardSize,
           ),
           Container(
             child: ListView.builder(

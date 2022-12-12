@@ -5,7 +5,7 @@ import 'package:path/path.dart';
 
 class DatabaseHelper {
   static final _databaseName = "dietapp.db";
-  static final _databaseVersion = 2;
+  static final _databaseVersion = 1;
   static final foodTable = "food";
   static final workoutTable = "workout";
   static final bodyTable = "body";
@@ -46,12 +46,13 @@ class DatabaseHelper {
       memo String
     )
     ''');
-
     await db.execute('''
     CREATE TABLE IF NOT EXISTS $workoutTable (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       date INTEGER DEFAULT 0,
       time INTEGER DEFAULT 0,
+      type INTEGER DEFAULT 0,
+      distance INTEGER DEFAULT 0,
       kcal INTEGER DEFAULT 0,
       intense INTEGER DEFAULT 0,
       part INTEGER DEFAULT,
@@ -59,7 +60,6 @@ class DatabaseHelper {
       memo String
     )
     ''');
-
     await db.execute('''
     CREATE TABLE IF NOT EXISTS $bodyTable (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -68,30 +68,31 @@ class DatabaseHelper {
       memo String
     )
     ''');
-
     await db.execute('''
     CREATE TABLE IF NOT EXISTS $weightTable (
       date INTEGER DEFAULT 0,
       weight INTEGER DEFAULT 0,
       fat INTEGER DEFAULT 0,
-      muscle INTEGER DEFAULT 0,
+      muscle INTEGER DEFAULT 0
     )
     ''');
   }
 
-  Future _onUpgrade(Database db, int oldVersion, int newVersion) async {
+  Future _onUpgrade(Database db, int oldVersion, int newVersion) {
     // 기존의 만들었던 테이블을 업그레이드 할 수 있다.
+    /*
     if(newVersion == 2){
       await db.execute("""
       ALTER TABLE $workoutTable
-      ADD type INTEGER DEFAULT 0,
+     
       """);
 
       await db.execute("""
       ALTER TABLE $workoutTable
-      ADD distance INTEGER DEFAULT 0
+      
       """);
     }
+     */
   }
 
   //음식
