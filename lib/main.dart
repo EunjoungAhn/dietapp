@@ -202,7 +202,7 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Column(
         children: [
           Container(
-            child: ListView.builder(
+            child: foods.isEmpty ? Image.asset("assets/img/rice.png") : ListView.builder(
               itemBuilder: (context, index) {
                 return Container(
                   height: cardSize,
@@ -216,7 +216,7 @@ class _MyHomePageState extends State<MyHomePage> {
             height: cardSize,
           ),
           Container(
-            child: ListView.builder(
+            child: workouts.isEmpty ? Image.asset("assets/img/workout.png") : ListView.builder(
               itemBuilder: (context, index) {
                 return Container(
                   height: cardSize,

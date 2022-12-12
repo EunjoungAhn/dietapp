@@ -295,7 +295,7 @@ class MainFoodCard extends StatelessWidget {
                 ),
               ),
 
-              Positioned.fill(
+              Positioned(
                 // 오른쪽 하단으로 설정
                 right: 6,
                 bottom: 6,
