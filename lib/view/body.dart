@@ -118,3 +118,38 @@ class _EyeBodyAddPageState extends State<EyeBodyAddPage> {
   }
 }
 
+class MainEyeBodyCard extends StatelessWidget {
+  final EyeBody eyeBody;
+  const MainEyeBodyCard({Key key, this.eyeBody}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.all(8),
+      child: ClipRRect(
+        // 전체 라운드 형태를 만들기 위해 감싼 위젯
+        borderRadius: BorderRadius.circular(12),
+        child: AspectRatio(
+          child: Stack(
+            children: [
+              // stack의 전체 화면을 채우겠다.
+              Positioned.fill(
+                child: AssetThumb(asset: Asset(eyeBody.image,"rice.png", 0,0),
+                    width: cardSize.toInt(), height: cardSize.toInt()),
+              ),
+
+              // 이미지 위에 검은색의 필터 쒸우기 글씨가 잘 보이기 위해
+              Positioned.fill(
+                child: Container(
+                  color: Colors.black12,
+                ),
+              ),
+
+            ],
+          ),
+          aspectRatio: 1,
+        ),
+      ),
+    );
+  }
+}

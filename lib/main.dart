@@ -236,6 +236,18 @@ class _MyHomePageState extends State<MyHomePage> {
                   // 몸무게
                 }else{
                   // 눈바디
+                  if(bodies.isEmpty){
+                    return Container(
+                      height: cardSize,
+                      width: cardSize,
+                      color: mainColor,
+                    );
+                  }
+                  return Container(
+                    height: cardSize,
+                    width: cardSize,
+                    child: MainEyeBodyCard(eyeBody: bodies[0],),
+                  );
                 }
                 return Container(
                   height: cardSize,
