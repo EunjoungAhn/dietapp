@@ -87,7 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(),
       body: getPage(),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: ![0,1].contains(currentIndex) ? Container() : FloatingActionButton(// 0이나1 인덱스가 아니면 안보이게 설정
         onPressed: () {
           // 선택 화면창 만들기
           showModalBottomSheet(
