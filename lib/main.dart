@@ -395,7 +395,9 @@ class _MyHomePageState extends State<MyHomePage> {
                           w.fat = int.tryParse(fCtrl.text) ?? 0;
 
                           await dbHelper.insertWeight(w);
-                          // getHistories();
+                          getHistories();
+                          // 키보드 닫히게 하기
+                          FocusScope.of(context).unfocus();
                         },
                       ),
                     ],
@@ -555,9 +557,18 @@ class _MyHomePageState extends State<MyHomePage> {
                   // 차트
                   Container(
                     height: 300,
+                    margin: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+                    padding: EdgeInsets.symmetric(horizontal: 25, vertical: 16),
                     decoration: BoxDecoration(
                       color: bgColor,
-                      borderRadius: BorderRadius.circular(12)
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                            blurRadius: 4,
+                            spreadRadius: 4,
+                            color: Colors.black12
+                        )
+                      ]
                     ),
                     child: LineChart(
                       LineChartData(
