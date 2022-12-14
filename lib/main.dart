@@ -268,6 +268,43 @@ class _MyHomePageState extends State<MyHomePage> {
               itemBuilder: (context, index) {
                 if(index == 0) {
                   // 몸무게
+                  if(weight.isEmpty){
+                    return Container();
+                  }else{
+                    final w = weight.first;
+
+                    return Container(
+                      child: Container(
+                        height: cardSize,
+                        width: cardSize,
+                        margin: EdgeInsets.all(8),
+                        padding: EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                            color: bgColor,
+                            borderRadius: BorderRadius.circular(12),
+                            boxShadow: [
+                              BoxShadow(
+                                  blurRadius: 4,
+                                  spreadRadius: 4,
+                                  color: Colors.black12
+                              )
+                            ]
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("${w.weight}kg", style: TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold
+                            ),),
+                          ],
+                        ),
+                      ),
+                      height: cardSize,
+                      width: cardSize,
+                    );
+                  }
+
 
                 }else{
                   // 눈바디
