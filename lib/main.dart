@@ -5,6 +5,7 @@ import 'package:dietapp/utils.dart';
 import 'package:dietapp/view/body.dart';
 import 'package:dietapp/view/food.dart';
 import 'package:dietapp/view/workout.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -47,6 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Food> foods = [];
   List<EyeBody> bodies = [];
   List<Weight> weight = [];
+  List<Weight> weights = [];
 
   void getHistories() async {
     int _d = Utils.getFormatTime(dateTime);
@@ -55,6 +57,8 @@ class _MyHomePageState extends State<MyHomePage> {
     workouts = await dbHelper.queryWorkoutByDate(_d);
     bodies = await dbHelper.queryEyeBodyByDate(_d);
     weight = await dbHelper.queryWeightByDate(_d);
+    weights = await dbHelper.queryAllWeight();
+    int charIndex = 0; // 어떤 그래프를 클릭했는지
 
     //그 날짜의 몸무게가 존재한다면 불러와라
     if(weight.isNotEmpty){
@@ -336,6 +340,7 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController wCtrl = TextEditingController();
   TextEditingController mCtrl = TextEditingController();
   TextEditingController fCtrl = TextEditingController();
+  int chartIndex = 0; // 어떤 그래프를 선택했는지
 
   Widget getWeightWidget(){
     return Container(
@@ -470,10 +475,139 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             );
           }
+          else if(index == 2){
+            List<FlSpot> spots = [];
+
+            //반복을 돌면서 그래프를 그린다.
+            for(final w in weights){
+                if(chartIndex == 0){
+                  //몸무게
+                  spots.add(FlSpot(w.date.toDouble(), w.weight.toDouble()));
+                }else if(chartIndex == 1){
+                  //근육량
+                  spots.add(FlSpot(w.date.toDouble(), w.muscle.toDouble()));
+                }else{
+                  //지방
+                  spots.add(FlSpot(w.date.toDouble(), w.fat.toDouble()));
+                }
+            }
+
+            return Container(
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      InkWell(
+                        child: Container(
+                          child: Text("몸무게", style: TextStyle(
+                            color: chartIndex == 0 ? Colors.white : iTxtColor
+                          ),),
+                          decoration: BoxDecoration(
+                              color: chartIndex == 0 ? mainColor : ibgColor,
+                              borderRadius: BorderRadius.circular(8)
+                          ),
+                          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                        ),
+                        onTap: () async {
+                          setState(() {
+                            chartIndex = 0;
+                          });
+                        },
+                      ),
+                      Container(width: 8,),
+                      InkWell(
+                        child: Container(
+                          child: Text("근육량", style: TextStyle(
+                              color: chartIndex == 1 ? Colors.white : iTxtColor
+                          ),),
+                          decoration: BoxDecoration(
+                              color: chartIndex == 1 ? mainColor : ibgColor,
+                              borderRadius: BorderRadius.circular(8)
+                          ),
+                          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                        ),
+                        onTap: () async {
+                          setState(() {
+                            chartIndex = 1;
+                          });
+                        },
+                      ),
+                      Container(width: 8,),
+                      InkWell(
+                        child: Container(
+                          child: Text("지방", style: TextStyle(
+                              color: chartIndex == 2 ? Colors.white : iTxtColor
+                          ),),
+                          decoration: BoxDecoration(
+                              color: chartIndex == 2 ? mainColor : ibgColor,
+                              borderRadius: BorderRadius.circular(8)
+                          ),
+                          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                        ),
+                        onTap: () async {
+                          setState(() {
+                            chartIndex = 2;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                  // 차트
+                  Container(
+                    height: 300,
+                    decoration: BoxDecoration(
+                      color: bgColor,
+                      borderRadius: BorderRadius.circular(12)
+                    ),
+                    child: LineChart(
+                      LineChartData(
+                        lineBarsData: [
+                          LineChartBarData(
+                            spots: spots,
+                            colors:  [mainColor]
+                          )
+                        ],
+                        gridData: FlGridData(
+                          show: false
+                        ),
+                        borderData: FlBorderData(
+                          show: false
+                        ),
+                        lineTouchData: LineTouchData(
+                          touchTooltipData: LineTouchTooltipData(
+                            getTooltipItems: (spots) {
+                              return [
+                                LineTooltipItem(
+                                  "${spots.first.y}kg", TextStyle(color: mainColor)
+                                )
+                              ];
+                            },
+                          )
+                        ),
+                        titlesData: FlTitlesData(
+                          bottomTitles: SideTitles(
+                            showTitles: true,
+                            getTitles: (value) {
+                              DateTime date = Utils.stringToDateTime(value.toInt().toString());
+                                return "${date.day}일";
+                            },
+                          ),
+                          leftTitles: SideTitles(
+                            showTitles: false,
+                          )
+                        ),
+
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            );
+          }
 
           return Container();
         },
-        itemCount: 2,
+        itemCount: 3,
       ),
     );
   }

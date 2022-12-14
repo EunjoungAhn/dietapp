@@ -46,6 +46,9 @@ dependencies:
   # 달력 패키기
   table_calendar: ^2.3.3
 
+  # 차트 패키지
+  fl_chart: ^0.12.3
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
