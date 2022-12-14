@@ -356,6 +356,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   headerStyle:  HeaderStyle(
                     centerHeaderTitle: true
                   ),
+                  calendarStyle: CalendarStyle(
+                    selectedColor: mainColor
+                  ),
                   initialCalendarFormat: CalendarFormat.month,
                   availableCalendarFormats: {
                     CalendarFormat.month: ""
