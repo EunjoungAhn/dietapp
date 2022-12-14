@@ -56,7 +56,19 @@ class _MyHomePageState extends State<MyHomePage> {
     bodies = await dbHelper.queryEyeBodyByDate(_d);
     weight = await dbHelper.queryWeightByDate(_d);
 
-    setState(() { });
+    //그 날짜의 몸무게가 존재한다면 불러와라
+    if(weight.isNotEmpty){
+      final w = weight.first;
+      wCtrl.text = w.weight.toString();
+      mCtrl.text = w.muscle.toString();
+      fCtrl.text = w.fat.toString();
+    }else{
+      wCtrl.text = "";
+      mCtrl.text = "";
+      fCtrl.text = "";
+    }
+
+   setState(() { });
   }
 
   @override
@@ -195,7 +207,10 @@ class _MyHomePageState extends State<MyHomePage> {
       return getHomeWidget();
     }else if(currentIndex == 1){
       return getHistoryWidget();
+    }else if(currentIndex == 2){
+      return getWeightWidget();
     }
+
 
     return Container();
   }
@@ -312,6 +327,147 @@ class _MyHomePageState extends State<MyHomePage> {
 
             return Container();
           },
+        itemCount: 2,
+      ),
+    );
+  }
+
+  CalendarController weightCalendarController = CalendarController();
+  TextEditingController wCtrl = TextEditingController();
+  TextEditingController mCtrl = TextEditingController();
+  TextEditingController fCtrl = TextEditingController();
+
+  Widget getWeightWidget(){
+    return Container(
+      child: ListView.builder(
+        itemBuilder: (context, index) {
+          if(index == 0){
+            return Container(
+              child: TableCalendar(
+                initialSelectedDay: dateTime,
+                calendarController: weightCalendarController,
+                onDaySelected: (date, events, holidays) {
+                  dateTime = date;
+                  getHistories();
+                },
+                headerStyle:  HeaderStyle(
+                    centerHeaderTitle: true
+                ),
+                initialCalendarFormat: CalendarFormat.week,
+                availableCalendarFormats: {
+                  CalendarFormat.week: ""
+                },
+              ),
+            );
+          }else if(index == 1){
+            return Container(
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Text("${dateTime.month}월 ${dateTime.day}일"),
+                      InkWell(
+                        child: Container(
+                          child: Text("저장"),
+                          decoration: BoxDecoration(
+                            color: mainColor,
+                            borderRadius: BorderRadius.circular(8)
+                          ),
+                          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                        ),
+                        onTap: () async {
+                          Weight w;
+                          if(weight.isEmpty){
+                            w = Weight(date: Utils.getFormatTime(dateTime));
+                          }else{
+                            w = weight.first;
+                          }
+                          // passing 했는데 값이 없으면 0으로 대입해라
+                          w.weight = int.tryParse(wCtrl.text) ?? 0;
+                          w.muscle = int.tryParse(mCtrl.text) ?? 0;
+                          w.fat = int.tryParse(fCtrl.text) ?? 0;
+
+                          await dbHelper.insertWeight(w);
+                          // getHistories();
+                        },
+                      ),
+                    ],
+                  ),
+
+                  Row(
+                    children: [
+                      Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch ,
+                            children: [
+                              Text("몸무게"),
+                              TextField(
+                                keyboardType: TextInputType.number,// 숫자만 입력가능하게 설정
+                                controller: wCtrl,
+                                textAlign: TextAlign.end,
+                                decoration: InputDecoration(
+                                    border: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: txtColor,
+                                            width: 0.5
+                                        )
+                                    )
+                                ),
+                              ),
+                            ],
+                          ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch ,
+                          children: [
+                            Text("근육량"),
+                            TextField(
+                              keyboardType: TextInputType.number,// 숫자만 입력가능하게 설정
+                              controller: mCtrl,
+                              textAlign: TextAlign.end,
+                              decoration: InputDecoration(
+                                  border: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: txtColor,
+                                          width: 0.5
+                                      )
+                                  )
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch ,
+                          children: [
+                            Text("지방"),
+                            TextField(
+                              keyboardType: TextInputType.number,// 숫자만 입력가능하게 설정
+                              controller: fCtrl,
+                              textAlign: TextAlign.end,
+                              decoration: InputDecoration(
+                                  border: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: txtColor,
+                                          width: 0.5
+                                      )
+                                  )
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          }
+
+          return Container();
+        },
         itemCount: 2,
       ),
     );
