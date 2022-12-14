@@ -203,9 +203,14 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget getHomeWidget(){
     return Container(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            child: foods.isEmpty ? Image.asset("assets/img/rice.png") : ListView.builder(
+            child: foods.isEmpty ? Container(
+              padding: EdgeInsets.all(8),
+                child: 
+              ClipRRect(
+                child: Image.asset("assets/img/rice.png"))) : ListView.builder(
               itemBuilder: (context, index) {
                 return Container(
                   height: cardSize,
@@ -219,7 +224,14 @@ class _MyHomePageState extends State<MyHomePage> {
             height: cardSize,
           ),
           Container(
-            child: workouts.isEmpty ? Image.asset("assets/img/workout.png") : ListView.builder(
+            child: workouts.isEmpty ?
+            Container(
+              padding: EdgeInsets.all(8),
+                child:
+                  ClipRRect(
+                    child: Image.asset("assets/img/workout.png"),
+                  borderRadius: BorderRadius.circular(12),
+                  )) : ListView.builder(
               itemBuilder: (context, index) {
                 return Container(
                   height: cardSize,
@@ -237,14 +249,16 @@ class _MyHomePageState extends State<MyHomePage> {
               itemBuilder: (context, index) {
                 if(index == 0) {
                   // 몸무게
+
                 }else{
                   // 눈바디
                   if(bodies.isEmpty){
                     return Container(
-                      height: cardSize,
-                      width: cardSize,
-                      color: mainColor,
-                    );
+                      padding: EdgeInsets.all(8),
+                        child: ClipRRect(
+                            child: Image.asset("assets/img/eyeBody.png"),
+                            borderRadius: BorderRadius.circular(12),
+                    ));
                   }
                   return Container(
                     height: cardSize,
@@ -282,6 +296,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   onDaySelected: (date, events, holidays) {
                     dateTime = date;
                     getHistories();
+                  },
+                  headerStyle:  HeaderStyle(
+                    centerHeaderTitle: true
+                  ),
+                  initialCalendarFormat: CalendarFormat.month,
+                  availableCalendarFormats: {
+                    CalendarFormat.month: ""
                   },
                 ),
               );
