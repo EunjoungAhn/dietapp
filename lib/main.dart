@@ -89,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 MaterialPageRoute(builder: (context) => FoodAddPage(
                                   // 새로 만든 food를 불러준다.
                                   food: Food(
-                                    date: Utils.getFormatTime(DateTime.now()),
+                                    date: Utils.getFormatTime(dateTime),
                                     kcal: 0,
                                     memo: "",
                                     type: 0,
@@ -111,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 MaterialPageRoute(builder: (context) => WorkoutAddPage(
                                   // 새로 만든 workout을 불러준다.
                                   workout: Workout(
-                                    date: Utils.getFormatTime(DateTime.now()),
+                                    date: Utils.getFormatTime(dateTime),
                                     time: 60,
                                     type: 0,
                                     kcal: 0,
@@ -140,7 +140,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 MaterialPageRoute(builder: (context) => EyeBodyAddPage(
                                   // 새로 만든 workout을 불러준다.
                                   body: EyeBody(
-                                    date: Utils.getFormatTime(DateTime.now()),
+                                    date: Utils.getFormatTime(dateTime),
                                     image: "",
                                     memo: "",
                                   ),
