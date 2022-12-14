@@ -361,9 +361,11 @@ class _MyHomePageState extends State<MyHomePage> {
             );
           }else if(index == 1){
             return Container(
+              margin: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               child: Column(
                 children: [
                   Row(
+                    mainAxisAlignment:  MainAxisAlignment.spaceBetween,
                     children: [
                       Text("${dateTime.month}월 ${dateTime.day}일"),
                       InkWell(
@@ -393,9 +395,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ],
                   ),
-
+                  Container(height: 12,),
                   Row(
                     children: [
+                      Container(width: 8,),
                       Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch ,
@@ -438,6 +441,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ],
                         ),
                       ),
+                      Container(width: 8,),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch ,
@@ -459,6 +463,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ],
                         ),
                       ),
+                      Container(width: 8,),
                     ],
                   ),
                 ],
