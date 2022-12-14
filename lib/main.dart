@@ -349,6 +349,7 @@ class _MyHomePageState extends State<MyHomePage> {
           if(index == 0){
             return Container(
               child: TableCalendar(
+                key: Key("weighCalendar"),
                 initialSelectedDay: dateTime,
                 calendarController: weightCalendarController,
                 onDaySelected: (date, events, holidays) {
