@@ -6,6 +6,7 @@ import 'package:dietapp/view/body.dart';
 import 'package:dietapp/view/food.dart';
 import 'package:dietapp/view/workout.dart';
 import 'package:flutter/material.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 void main() {
   runApp(const MyApp());
@@ -192,6 +193,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget getPage(){
     if(currentIndex == 0){
       return getHomeWidget(DateTime.now());
+    }else if(currentIndex == 1){
+      return getHistoryWidget();
     }
 
     return Container();
@@ -261,6 +264,29 @@ class _MyHomePageState extends State<MyHomePage> {
             height: cardSize + 20,
           ),
         ],
+      ),
+    );
+  }
+
+  CalendarController calendarController = CalendarController();
+
+  Widget getHistoryWidget(){
+    return Container(
+      child: ListView.builder(
+          itemBuilder: (context, index) {
+            if(index == 0){
+              return Container(
+                child: TableCalendar(
+                  initialSelectedDay: dateTime,
+                  calendarController: calendarController,
+                  onDaySelected: (date, events, holidays) {
+                    dateTime = date;
+                    getHistories();
+                  },
+                ),
+              );
+            }
+          },
       ),
     );
   }

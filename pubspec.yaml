@@ -43,6 +43,9 @@ dependencies:
   # 앨범에 접근하기 위한 패키지
   multi_image_picker: ^4.7.12
 
+  # 달력 패키기
+  table_calendar: ^2.3.3
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
