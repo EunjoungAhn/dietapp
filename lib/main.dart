@@ -192,7 +192,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget getPage(){
     if(currentIndex == 0){
-      return getHomeWidget(DateTime.now());
+      return getHomeWidget();
     }else if(currentIndex == 1){
       return getHistoryWidget();
     }
@@ -200,7 +200,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Container();
   }
 
-  Container getHomeWidget(DateTime date){
+  Widget getHomeWidget(){
     return Container(
       child: Column(
         children: [
@@ -285,8 +285,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   },
                 ),
               );
+            }else if(index == 1){
+              return getHomeWidget();
             }
+
+            return Container();
           },
+        itemCount: 2,
       ),
     );
   }
