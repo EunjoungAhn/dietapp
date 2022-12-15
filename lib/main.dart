@@ -85,6 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     });
 
+    setScheduling(); // 테스트를 위해 불러오기
     return true;
   }
 
@@ -123,6 +124,33 @@ class _MyHomePageState extends State<MyHomePage> {
   // 앱이 실행될때 오늘 날짜 기준으로 메인화면에 데이터 불러오기
     getHistories();
     initNotification();
+  }
+
+  // 알림을 언제 보낼지 셋팅
+  void setScheduling(){
+    var android = AndroidNotificationDetails(
+        "fs", "dietapp", "dietapp",
+        importance: Importance.max,
+        priority: Priority.max
+    );
+    var ios = IOSNotificationDetails();
+    
+    NotificationDetails details = NotificationDetails(
+      iOS: ios,
+      android: android
+    );
+    
+    flutterLocalNotificationsPlugin.zonedSchedule(
+        0,
+        "오늘 다이어트를 기록해주세요!",
+        "앱을 실행해주세요!",
+        tz.TZDateTime.from(DateTime.now().add(Duration(seconds: 10)), tz.local),// 알림 테스트를 위해 앱 실행 후 10초 후,
+        details,
+        androidAllowWhileIdle: true,
+        uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+        payload: "dietapp",
+        matchDateTimeComponents: DateTimeComponents.time //매일 알림을 주기위해 설정 (매주 설정도 가능)
+    );
   }
 
   @override
