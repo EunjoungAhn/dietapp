@@ -816,6 +816,54 @@ class _MyHomePageState extends State<MyHomePage> {
                ),
              );
             }
+            else if(index == 1){
+              return Container(
+                height: cardSize,
+                child: ListView.builder(
+                  itemBuilder: (context, _index) {
+                    return Container(
+                      height: cardSize,
+                      width: cardSize,
+                      child: MainFoodCard(food: allFoods[_index],),
+                    );
+                  },
+                  itemCount: allFoods.length,
+                  scrollDirection: Axis.horizontal,
+                ),
+              );
+            }
+            else if(index == 2){
+              return Container(
+                height: cardSize,
+                child: ListView.builder(
+                  itemBuilder: (context, _index) {
+                    return Container(
+                      height: cardSize,
+                      width: cardSize,
+                      child: MainWorkoutCard(workout: allWorkouts[_index],),
+                    );
+                  },
+                  itemCount: allWorkouts.length,
+                  scrollDirection: Axis.horizontal,
+                ),
+              );
+            }
+            else if(index == 3){
+              return Container(
+                height: cardSize,
+                child: ListView.builder(
+                  itemBuilder: (context, _index) {
+                    return Container(
+                      height: cardSize,
+                      width: cardSize,
+                      child: MainEyeBodyCard(eyeBody: allBodies[_index],),
+                    );
+                  },
+                  itemCount: allBodies.length,
+                  scrollDirection: Axis.horizontal,
+                ),
+              );
+            }
 
             return Container();
           },
