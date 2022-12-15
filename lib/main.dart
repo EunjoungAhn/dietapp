@@ -7,10 +7,24 @@ import 'package:dietapp/view/food.dart';
 import 'package:dietapp/view/workout.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/data/latest.dart' as tz;
 
-void main() {
+FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+
+void main() async {
   runApp(const MyApp());
+
+  tz.initializeTimeZones();
+  // 채널 생성
+  const AndroidNotificationChannel androidNotificationChannel = AndroidNotificationChannel("fs", "dietapp", "dietapp");
+  flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  // 채널 요청
+  await flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()?.createNotificationChannel(
+    androidNotificationChannel
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -53,6 +67,27 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Weight> weight = [];
   List<Weight> weights = [];
 
+  // 알림 초기화 및 알림 설정
+  Future<bool> initNotification() async {
+    if(flutterLocalNotificationsPlugin == null){
+      flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    }
+
+    var initSettingAndroid = AndroidInitializationSettings("app_icon");
+    var initiOSSetting = IOSInitializationSettings();
+
+    var initSetting = InitializationSettings(
+      android: initSettingAndroid, iOS: initiOSSetting
+    );
+
+    await flutterLocalNotificationsPlugin.initialize(initSetting,
+    onSelectNotification: (payload) async {
+
+    });
+
+    return true;
+  }
+
   void getHistories() async {
     int _d = Utils.getFormatTime(dateTime);
 
@@ -87,6 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
   // 앱이 실행될때 오늘 날짜 기준으로 메인화면에 데이터 불러오기
     getHistories();
+    initNotification();
   }
 
   @override

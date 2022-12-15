@@ -49,6 +49,9 @@ dependencies:
   # 차트 패키지
   fl_chart: ^0.12.3
 
+  # 알림 패키지
+  flutter_local_notifications: ^4.0.1+2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
