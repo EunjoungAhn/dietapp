@@ -74,10 +74,10 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     var initSettingAndroid = AndroidInitializationSettings("app_icon");
-    var initiOSSetting = IOSInitializationSettings();
+    var initIOSSetting = IOSInitializationSettings();
 
     var initSetting = InitializationSettings(
-      android: initSettingAndroid, iOS: initiOSSetting
+      android: initSettingAndroid, iOS: initIOSSetting
     );
 
     await flutterLocalNotificationsPlugin.initialize(initSetting,
@@ -133,8 +133,8 @@ class _MyHomePageState extends State<MyHomePage> {
         importance: Importance.max,
         priority: Priority.max
     );
-    var ios = IOSNotificationDetails();
-    
+    var ios = const IOSNotificationDetails();
+
     NotificationDetails details = NotificationDetails(
       iOS: ios,
       android: android
