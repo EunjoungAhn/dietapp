@@ -11,11 +11,14 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
+import 'package:intl/date_symbol_data_local.dart';
 
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
 void main() async {
-  runApp(const MyApp());
+  initializeDateFormatting().then((_) {
+    runApp(const MyApp());
+  });
 
   tz.initializeTimeZones();
   // 채널 생성
@@ -424,6 +427,7 @@ class _MyHomePageState extends State<MyHomePage> {
             if(index == 0){
               return Container(
                 child: TableCalendar(
+                  locale: "ko-KR",
                   initialSelectedDay: dateTime,
                   calendarController: calendarController,
                   onDaySelected: (date, events, holidays) {
@@ -466,6 +470,7 @@ class _MyHomePageState extends State<MyHomePage> {
           if(index == 0){
             return Container(
               child: TableCalendar(
+                locale: "ko-KR",
                 key: Key("weighCalendar"),
                 initialSelectedDay: dateTime,
                 calendarController: weightCalendarController,
