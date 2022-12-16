@@ -6,6 +6,22 @@ if (localPropertiesFile.exists()) {
     }
 }
 
+def flutterCompileSdkVersion = localProperties.getProperty('flutter.flutterCompileSdkVersion')
+if (flutterCompileSdkVersion == null) {
+    flutterCompileSdkVersion = '31'
+}
+
+def flutterMinSdkVersion = localProperties.getProperty('flutter.flutterMinSdkVersion')
+if (flutterMinSdkVersion == null) {
+    flutterMinSdkVersion = '16'
+}
+
+def flutterTargetSdkVersion = localProperties.getProperty('flutter.flutterTargetSdkVersion')
+if (flutterTargetSdkVersion == null) {
+    flutterTargetSdkVersion = '31'
+}
+
+
 def flutterRoot = localProperties.getProperty('flutter.sdk')
 if (flutterRoot == null) {
     throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
@@ -47,10 +63,11 @@ android {
         applicationId "com.example.dietapp"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
-        minSdkVersion flutter.minSdkVersion
-        targetSdkVersion flutter.targetSdkVersion
+        minSdkVersion flutterMinSdkVersion.toInteger()
+        targetSdkVersion flutterMinSdkVersion.toInteger()
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -72,3 +89,4 @@ dependencies {
 }
 
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'

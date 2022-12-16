@@ -54,6 +54,9 @@ dependencies:
 
   # 파이어베이스 패키기
   firebase_core: ^0.7.0
+  # 파이어베이스 앱 충돌 및 버그 확인을 위한 패키지
+  firebase_crashlytics: ^0.4.0+1
+
 
 dev_dependencies:
   flutter_test:

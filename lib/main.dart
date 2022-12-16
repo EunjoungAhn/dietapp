@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dietapp/data/data.dart';
 import 'package:dietapp/data/database.dart';
 import 'package:dietapp/style.dart';
@@ -5,6 +7,8 @@ import 'package:dietapp/utils.dart';
 import 'package:dietapp/view/body.dart';
 import 'package:dietapp/view/food.dart';
 import 'package:dietapp/view/workout.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -16,8 +20,15 @@ import 'package:intl/date_symbol_data_local.dart';
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
 void main() async {
-  initializeDateFormatting().then((_) {
-    runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  runZonedGuarded(() {
+    initializeDateFormatting().then((_) {
+      runApp(const MyApp());
+    });
+  }, (error, stackTrace) {
+    FirebaseCrashlytics.instance.recordError(error, stackTrace);
   });
 
   tz.initializeTimeZones();
