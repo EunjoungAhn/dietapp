@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: '',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: mainMColor,
       ),
       home: const MyHomePage(),
     );
@@ -156,10 +156,14 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: PreferredSize(child: AppBar(), preferredSize: Size.fromHeight(0),),
       body: getPage(),
       floatingActionButton: ![0,1].contains(currentIndex) ? Container() : FloatingActionButton(// 0이나1 인덱스가 아니면 안보이게 설정
         onPressed: () {
+          setState(() {
+            changeToDarkMode();
+          });
+          return;
           // 선택 화면창 만들기
           showModalBottomSheet(
               context: context,
