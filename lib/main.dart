@@ -7,6 +7,8 @@ import 'package:dietapp/utils.dart';
 import 'package:dietapp/view/body.dart';
 import 'package:dietapp/view/food.dart';
 import 'package:dietapp/view/workout.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -42,7 +44,8 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key key}) : super(key: key);
+  MyApp({Key key}) : super(key: key);
+  final analytics = FirebaseAnalytics();
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +55,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: mainMColor,
       ),
       home: const MyHomePage(),
+      navigatorObservers: [
+        FirebaseAnalyticsObserver(analytics: analytics);
+      ],
     );
   }
 }
